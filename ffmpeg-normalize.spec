@@ -28,8 +28,6 @@
 %global srcname ffmpeg-normalize
 %global pyname  ffmpeg_normalize
 
-%{?el7:%global python3_pkgversion 34}
-
 Name:           %{srcname}
 Version:        1.3.6
 Release:        0%{?dist}
@@ -40,8 +38,12 @@ URL:            https://github.com/slhck/ffmpeg-normalize
 Source0:        https://github.com/slhck/ffmpeg-normalize/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
-BuildRequires:  python%{python3_pkgversion}-devel
-BuildRequires:  python%{python3_pkgversion}-setuptools
+BuildRequires:  python-devel
+BuildRequires:  python-setuptools
+BuildRequires:  python2-pypandoc
+BuildRequires:  python2-tqdm
+Requires:  python-setuptools
+Requires:  python2-tqdm
 %{?python_enable_dependency_generator}
 
 %description
@@ -54,17 +56,17 @@ target level.
 %autosetup -n %{srcname}-%{version}
 
 %build
-%py3_build
+%py2_build
 
 %install
-%py3_install
+%py2_install
 
 %check
-%{__python3} setup.py test
+%{__python2} setup.py test
 
 %files
 %license LICENSE
 %doc README.md
-%{python3_sitelib}/%{pyname}/
-%{python3_sitelib}/%{pyname}-*.egg-info/
+%{python2_sitelib}/%{pyname}/
+%{python2_sitelib}/%{pyname}-*.egg-info/
 %{_bindir}/%{srcname}
